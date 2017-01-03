@@ -308,7 +308,7 @@ void main( void )
 <script type="text/javascript">
 var start = function () {
     var sr = new ShaderRender(document.getElementById('canvas'));
-    sr.init('canvas', 'shader');
+    sr.init(document.getElementById('shader').textContent);
     sr.beforeRender = function() {
         var color = this.gl.getUniformLocation(this.shaderProgram, "color");
         this.gl.uniform3f(color, 0.5, 1., .0);

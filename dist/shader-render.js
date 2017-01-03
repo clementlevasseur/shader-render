@@ -83,46 +83,12 @@ module.exports = function () {
                         return this.shaderProgram;
                 }
         }, {
-                key: "getShaderFromElement",
-                value: function getShaderFromElement(gl, id) {
-
-                        var shaderScript = document.getElementById(id);
-
-                        if (!shaderScript) return null;
-
-                        var str = "";
-                        var k = shaderScript.firstChild;
-                        while (k) {
-                                if (k.nodeType == 3) str += k.textContent;
-                                k = k.nextSibling;
-                        }
-
-                        var shader;
-                        if (shaderScript.type == "x-shader/x-fragment") {
-                                shader = this.gl.createShader(this.gl.FRAGMENT_SHADER);
-                        } else if (shaderScript.type == "x-shader/x-vertex") {
-                                shader = this.gl.createShader(this.gl.VERTEX_SHADER);
-                        } else {
-                                return null;
-                        }
-
-                        this.gl.shaderSource(shader, str);
-                        this.gl.compileShader(shader);
-
-                        if (!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) {
-                                console.warn(this.gl.getShaderInfoLog(shader));
-                                return null;
-                        }
-
-                        return shader;
-                }
-        }, {
                 key: "initShaders",
                 value: function initShaders() {
 
                         var vs = "#ifdef GL_ES\nprecision mediump float;\n#endif\n" + "attribute vec3 aVertexPosition; uniform float uTime; varying vec3 vPosition;" + "void main(void) { gl_Position = vec4(aVertexPosition, 1.0); vPosition = aVertexPosition; }";
 
-                        var fs = document.getElementById(this.webgl_shaderElementName).textContent;
+                        var fs = this.webgl_shaderElement;
 
                         this.shaderProgram = this.createShaderProgram(this.gl, vs, fs);
                         if (!this.shaderProgram) {
@@ -182,9 +148,9 @@ module.exports = function () {
                 }
         }, {
                 key: "init",
-                value: function init(canvasElementName, shaderElementName) {
+                value: function init(shaderElement) {
 
-                        this.webgl_shaderElementName = shaderElementName;
+                        this.webgl_shaderElement = shaderElement;
 
                         this.initGL();
                         this.initShaders();
