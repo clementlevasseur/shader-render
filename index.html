@@ -311,7 +311,7 @@ var start = function () {
     sr.init(document.getElementById('shader').textContent);
     sr.beforeRender = function() {
         var color = this.gl.getUniformLocation(this.shaderProgram, "color");
-        this.gl.uniform3f(color, 0.5, 1., .0);
+        this.gl.uniform3f(color, 1.0, 0.4, .0);
     }.bind(sr);
     sr.start();
 }
